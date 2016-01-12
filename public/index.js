@@ -1,5 +1,28 @@
 'use strict';
 
+
+function euro_kilometers() {
+
+	for (var i = 0; i < rentals.length; i++) {
+
+		for (var j = 0; j < rentals.length; j++) {
+
+			if (cars[j].id == rentals[i].carId ) {
+
+				// Get the number of days for the location
+				var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
+				nb_days = nb_days/(1000*60*60*24);
+
+				rentals[i].price = nb_days*cars[j].pricePerDay + rentals[i].distance*cars[j].pricePerKm; 
+			}
+		}
+	}
+}
+
+
+
+
+
 //list of cars
 //useful for ALL exercises
 var cars = [{
@@ -169,3 +192,5 @@ console.log(cars);
 console.log(rentals);
 console.log(actors);
 console.log(rentalModifications);
+
+euro_kilometers();
