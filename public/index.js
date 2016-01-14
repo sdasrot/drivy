@@ -1,25 +1,62 @@
 'use strict';
 
-
-function euro_kilometers() {
+// Exercise 1 :
+function rental_price() {
 
 	for (var i = 0; i < rentals.length; i++) {
 
 		for (var j = 0; j < rentals.length; j++) {
 
 			if (cars[j].id == rentals[i].carId ) {
-
+				
 				// Get the number of days for the location
 				var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
 				nb_days = nb_days/(1000*60*60*24);
-
-				rentals[i].price = nb_days*cars[j].pricePerDay + rentals[i].distance*cars[j].pricePerKm; 
+				
+				// Calcul of the rental price
+				var time_component = nb_days * cars[j].pricePerDay;
+				var distance_component = rentals[i].distance * cars[j].pricePerKm;		
+				rentals[i].price = time_component + distance_component;
 			}
 		}
 	}
 }
+// Results : 10, 330, 1850
 
 
+// Exercise 2 :
+function new_prices() {
+	
+	for (var i = 0; i < rentals.length; i++) {
+
+		for (var j = 0; j < rentals.length; j++) {
+
+			if (cars[j].id == rentals[i].carId ) {
+							
+				// Get the number of days for the location
+				var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
+				nb_days = nb_days/(1000*60*60*24);
+						
+				// Conditions for the reduction
+				if (1 <= nb_days <= 4) {
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.9;
+				}
+				else if (5 <= nb_days <= 10) {
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.7;
+				}
+				else if (nb_days > 10) {
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.5;
+				} 
+				
+				// Calcul of the rental price
+				var time_component = nb_days * cars[j].pricePerDay;
+				var distance_component = rentals[i].distance * cars[j].pricePerKm;
+				rentals[i].price = time_component + distance_component;
+			}
+		}
+	}
+}
+// Results : 10, 306, 1710
 
 
 
@@ -192,5 +229,5 @@ console.log(cars);
 console.log(rentals);
 console.log(actors);
 console.log(rentalModifications);
-
-euro_kilometers();
+//rental_price();
+new_prices();
