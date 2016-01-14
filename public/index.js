@@ -5,7 +5,7 @@ function rental_price() {
 
 	for (var i = 0; i < rentals.length; i++) {
 
-		for (var j = 0; j < rentals.length; j++) {
+		for (var j = 0; j < cars.length; j++) {
 
 			if (cars[j].id == rentals[i].carId ) {
 				
@@ -21,7 +21,11 @@ function rental_price() {
 		}
 	}
 }
-// Results : 10, 330, 1850
+/* Updates :
+   id : 1-pb-92 | price : 10 
+   id : 2-rs-92 | price : 330
+   id : 3-sa-92 | price : 1850
+*/
 
 
 
@@ -30,7 +34,7 @@ function new_prices() {
 	
 	for (var i = 0; i < rentals.length; i++) {
 
-		for (var j = 0; j < rentals.length; j++) {
+		for (var j = 0; j < cars.length; j++) {
 
 			if (cars[j].id == rentals[i].carId ) {
 							
@@ -57,12 +61,16 @@ function new_prices() {
 		}
 	}
 }
-// Results : 10, 306, 1710
-
+/* Updates :
+   id : 1-pb-92 | price : 10 
+   id : 2-rs-92 | price : 306 
+   id : 3-sa-92 | price : 1710
+*/
 
 
 // Exercise 3 :
 function commission() {
+	
 	for (var i = 0; i < rentals.length; i++) {
 
 		// Get the number of days for the location
@@ -75,11 +83,37 @@ function commission() {
 		rentals[i].drivy = commission/2-nb_days;
 	}
 }
-/* Results :
-   assistance : 0  | drivy : 1.5   | insurance : 1.5
-   assistance : 4  | drivy : 41.9  | insurance : 45.9
-   assistance : 14 | drivy : 242.5 | insurance : 256.5
+/* Updates :
+   id : 1-pb-92 | assistance : 0  | drivy : 1.5   | insurance : 1.5
+   id : 2-rs-92 | assistance : 4  | drivy : 41.9  | insurance : 45.9
+   id : 3-sa-92 | assistance : 14 | drivy : 242.5 | insurance : 256.5
 */
+
+
+
+// Exercise 4 :
+function deductible_option() {
+	
+	for (var i = 0; i < rentals.length; i++) {
+
+		// Get the number of days for the location
+		var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
+		nb_days = nb_days/(1000*60*60*24);
+
+		var deductibleOpt = true;
+		if (rentals[i].deductibleReduction = deductibleOpt) {
+			rentals[i].drivy += 4*nb_days;
+			rentals[i].price += 4*nb_days;
+		}
+	}
+}
+/* Updates :
+   id : 1-pb-92 | drivy : 1.5   | price : 10
+   id : 2-rs-92 | drivy : 57.9  | price : 322
+   id : 3-sa-92 | drivy : 298.5 | price : 1766
+*/
+
+
 
 
 
@@ -256,3 +290,4 @@ console.log(rentalModifications);
 rental_price();
 new_prices();
 commission();
+deductible_option();
