@@ -24,6 +24,7 @@ function rental_price() {
 // Results : 10, 330, 1850
 
 
+
 // Exercise 2 :
 function new_prices() {
 	
@@ -39,13 +40,13 @@ function new_prices() {
 						
 				// Conditions for the reduction
 				if (1 <= nb_days <= 4) {
-					cars[j].pricePerDay = cars[j].pricePerDay * 0.9;
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.9; // 10%
 				}
 				else if (5 <= nb_days <= 10) {
-					cars[j].pricePerDay = cars[j].pricePerDay * 0.7;
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.7; // 30%
 				}
 				else if (nb_days > 10) {
-					cars[j].pricePerDay = cars[j].pricePerDay * 0.5;
+					cars[j].pricePerDay = cars[j].pricePerDay * 0.5; // 50%
 				} 
 				
 				// Calcul of the rental price
@@ -57,6 +58,28 @@ function new_prices() {
 	}
 }
 // Results : 10, 306, 1710
+
+
+
+// Exercise 3 :
+function commission() {
+	for (var i = 0; i < rentals.length; i++) {
+
+		// Get the number of days for the location
+		var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
+		nb_days = nb_days/(1000*60*60*24);
+		
+		var commission = rentals[i].price * 0.3; // 30% of the rental price
+		rentals[i].insurance = commission/2;     
+		rentals[i].assistance = nb_days;
+		rentals[i].drivy = commission/2-nb_days;
+	}
+}
+/* Results :
+   assistance : 0  | drivy : 1.5   | insurance : 1.5
+   assistance : 4  | drivy : 41.9  | insurance : 45.9
+   assistance : 14 | drivy : 242.5 | insurance : 256.5
+*/
 
 
 
@@ -229,5 +252,7 @@ console.log(cars);
 console.log(rentals);
 console.log(actors);
 console.log(rentalModifications);
-//rental_price();
+
+rental_price();
 new_prices();
+commission();
