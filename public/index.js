@@ -77,10 +77,10 @@ function commission() {
 		var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
 		nb_days = nb_days/(1000*60*60*24);
 		
-		var commission = rentals[i].price * 0.3; // 30% of the rental price
-		rentals[i].insurance = commission/2;     
-		rentals[i].assistance = nb_days;
-		rentals[i].drivy = commission/2-nb_days;
+		var comm = rentals[i].price * 0.3; // 30% of the rental price
+		rentals[i].commission.insurance = comm/2;     
+		rentals[i].commission.assistance = nb_days;
+		rentals[i].commission.drivy = comm/2-nb_days;
 	}
 }
 /* Updates :
@@ -100,9 +100,8 @@ function deductible_option() {
 		var nb_days =  new Date(rentals[i].returnDate).getTime() - new Date(rentals[i].pickupDate).getTime();
 		nb_days = nb_days/(1000*60*60*24);
 
-		var deductibleOpt = true;
-		if (rentals[i].deductibleReduction = deductibleOpt) {
-			rentals[i].drivy += 4*nb_days;
+		if (rentals[i].options.deductibleReduction === true) {
+			rentals[i].commission.drivy += 4*nb_days;
 			rentals[i].price += 4*nb_days;
 		}
 	}
@@ -114,6 +113,46 @@ function deductible_option() {
 */
 
 
+
+// Exercise 4 :
+function actors_payment() {
+
+	for (var i = 0; i < rentals.length; i++) {
+		
+		for (var j = 0; j < actors.length; j++) {
+		
+			for (var k = 0; k < actors[j].payment.length; k++) {
+				
+				if (rentals[i].id == actors[j].rentalId ) {
+				
+					switch(actors[j].payment[k].who) {
+
+						case "driver" :
+							actors[j].payment[k].amount = rentals[i].price;
+						break;
+						
+						case "owner" :
+							actors[j].payment[k].amount = rentals[i].price - rentals[i].commission.insurance - rentals[j].commission.assistance - rentals[i].commission.drivy;// - comm;
+						break;
+						
+						case "insurance" :
+							actors[j].payment[k].amount = rentals[i].commission.insurance;
+						break;
+						
+						case "assistance" :
+							actors[j].payment[k].amount = rentals[j].commission.assistance;
+						break;
+						
+						case "drivy" :
+							actors[j].payment[k].amount = rentals[i].commission.drivy;
+						break;		
+					
+					}
+				}	
+			}
+		}
+	}
+}
 
 
 
@@ -291,3 +330,4 @@ rental_price();
 new_prices();
 commission();
 deductible_option();
+actors_payment();
